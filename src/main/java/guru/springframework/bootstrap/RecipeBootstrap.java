@@ -19,9 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by jt on 6/13/17.
- */
 @Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -30,24 +27,23 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
 
-    @Autowired
-    private final UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
-
-    @Autowired
-    private final CategoryReactiveRepository categoryReactiveRepository;
-
-    @Autowired
-    private final RecipeReactiveRepository recipeReactiveRepository;
+//    @Autowired
+//    private final UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository;
+//
+//    @Autowired
+//    private final CategoryReactiveRepository categoryReactiveRepository;
+//
+//    @Autowired
+//    private final RecipeReactiveRepository recipeReactiveRepository;
 
     public RecipeBootstrap(CategoryRepository categoryRepository,
-                           RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository,
-                           UnitOfMeasureReactiveRepository unitOfMeasureReactiveRepository, CategoryReactiveRepository categoryReactiveRepository, RecipeReactiveRepository recipeReactiveRepository) {
+                           RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.categoryRepository = categoryRepository;
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
-        this.categoryReactiveRepository = categoryReactiveRepository;
-        this.recipeReactiveRepository = recipeReactiveRepository;
-        this.unitOfMeasureReactiveRepository = unitOfMeasureReactiveRepository;
+//        this.categoryReactiveRepository = categoryReactiveRepository;
+//        this.recipeReactiveRepository = recipeReactiveRepository;
+//        this.unitOfMeasureReactiveRepository = unitOfMeasureReactiveRepository;
     }
 
     @Override
@@ -59,9 +55,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         recipeRepository.saveAll(getRecipes());
         log.debug("Loading Bootstrap Data");
 
-        log.error("Unit of measure Count: " + unitOfMeasureReactiveRepository.count().block().toString());
-        log.error("Category Count: " + categoryReactiveRepository.count().block().toString());
-        log.error("Recipe Count: " + recipeReactiveRepository.count().block().toString());
+//        log.error("Unit of measure Count: " + unitOfMeasureReactiveRepository.count().block().toString());
+//        log.error("Category Count: " + categoryReactiveRepository.count().block().toString());
+//        log.error("Recipe Count: " + recipeReactiveRepository.count().block().toString());
 
     }
 

@@ -2,24 +2,22 @@ package guru.springframework.repositories.reactive;
 
 import guru.springframework.domain.Category;
 import junit.framework.TestCase;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@ExtendWith(SpringExtension.class)
+@RunWith(SpringRunner.class)
 @DataMongoTest
-@SpringBootTest
 public class CategoryReactiveRepositoryIT extends TestCase {
 
     @Autowired
     CategoryReactiveRepository categoryReactiveRepository;
 
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
         categoryReactiveRepository.deleteAll().block();
     }
 
@@ -39,6 +37,8 @@ public class CategoryReactiveRepositoryIT extends TestCase {
     public void findByDescriptionTest() throws Exception {
         Category category = new Category();
         category.setDescription("Example");
+
+        categoryReactiveRepository.save(category).then().block();
 
         Category categoryMono = categoryReactiveRepository.findByDescription("Example").block();
 
