@@ -103,8 +103,6 @@ public class IngredientServiceImpl implements IngredientService {
         Recipe recipe = recipeRepository.findById(recipeId).block() ;
 
         if (recipe != null) {
-
-
             Optional<Ingredient> ingredientOptional = recipe
                     .getIngredients()
                     .stream()
@@ -114,7 +112,7 @@ public class IngredientServiceImpl implements IngredientService {
             if (ingredientOptional.isPresent()) {
                 log.debug("found Ingredient");
                 recipe.getIngredients().remove(ingredientOptional.get());
-                recipeRepository.save(recipe);
+                recipeRepository.save(recipe).block();
             }
         } else {
             log.debug("Recipe Id not found: " + recipeId);
