@@ -34,24 +34,15 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Flux<Recipe> getRecipes() {
         log.debug("I'm in the service");
-
         return recipeRepository.findAll();
     }
 
     @Override
     public Mono<Recipe> findById(String id) {
-
-        Recipe recipe = recipeRepository.findById(id).block();
-
-        if (recipe == null) {
-            throw new NotFoundException("Recipe Not Found. For ID value: " + id );
-        }
-
-        return Mono.just(recipe);
+        return recipeRepository.findById(id);
     }
 
     @Override
-    @Transactional
     public Mono<RecipeCommand> findCommandById(String id) {
 
         RecipeCommand recipeCommand = recipeToRecipeCommand.convert(findById(id).block());
@@ -67,7 +58,6 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    @Transactional
     public Mono<RecipeCommand> saveRecipeCommand(RecipeCommand command) {
         Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
 
@@ -78,7 +68,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Mono<Void> deleteById(String idToDelete) {
-        recipeRepository.deleteById(idToDelete);
+        recipeRepository.deleteById(idToDelete).block();
         return Mono.empty();
     }
 }
